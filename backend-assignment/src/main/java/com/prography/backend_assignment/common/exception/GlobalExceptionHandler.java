@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
         log.warn("Business exception: {} - {}", errorCode.getCode(), e.getMessage());
         return ResponseEntity
                 .status(errorCode.getStatus())
-                .body(ApiResponse.error(errorCode.getStatus(), errorCode.getCode(), e.getMessage()));
+                .body(ApiResponse.error(errorCode.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         log.warn("Validation exception: {}", message);
         return ResponseEntity
                 .badRequest()
-                .body(ApiResponse.error(400, "INVALID_INPUT", message));
+                .body(ApiResponse.error("INVALID_INPUT", message));
     }
 
     @ExceptionHandler(Exception.class)
@@ -39,6 +39,6 @@ public class GlobalExceptionHandler {
         log.error("Unexpected exception", e);
         return ResponseEntity
                 .internalServerError()
-                .body(ApiResponse.error(500, "INTERNAL_ERROR", "서버 내부 오류가 발생했습니다."));
+                .body(ApiResponse.error("INTERNAL_ERROR", "서버 내부 오류가 발생했습니다."));
     }
 }

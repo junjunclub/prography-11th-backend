@@ -7,27 +7,33 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class ApiResponse<T> {
 
-    private int status;
-    private String code;
-    private String message;
+    private boolean success;
     private T data;
+    private ErrorDetail error;
 
     public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(200, "SUCCESS", "요청이 성공적으로 처리되었습니다.", data);
+        return new ApiResponse<>(true, data, null);
     }
 
     public static ApiResponse<Void> ok() {
-        return new ApiResponse<>(200, "SUCCESS", "요청이 성공적으로 처리되었습니다.", null);
+        return new ApiResponse<>(true, null, null);
     }
 
     public static <T> ApiResponse<T> created(T data) {
-        return new ApiResponse<>(201, "CREATED", "리소스가 성공적으로 생성되었습니다.", data);
+        return new ApiResponse<>(true, data, null);
     }
 
-    public static ApiResponse<Void> error(int status, String code, String message) {
-        return new ApiResponse<>(status, code, message, null);
+    public static ApiResponse<Void> error(String code, String message) {
+        return new ApiResponse<>(false, null, new ErrorDetail(code, message));
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class ErrorDetail {
+        private String code;
+        private String message;
     }
 }
