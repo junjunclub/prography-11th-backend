@@ -64,6 +64,10 @@ public class Member extends BaseEntity {
         this.team = team;
     }
 
+    public void updatePhone(String phone) {
+        this.phone = phone;
+    }
+
     public void withdraw() {
         this.status = MemberStatus.WITHDRAWN;
     }
