@@ -31,6 +31,8 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    private String phone;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,6 +62,10 @@ public class Member extends BaseEntity {
         this.name = name;
         this.part = part;
         this.team = team;
+    }
+
+    public void updatePhone(String phone) {
+        this.phone = phone;
     }
 
     public void withdraw() {
