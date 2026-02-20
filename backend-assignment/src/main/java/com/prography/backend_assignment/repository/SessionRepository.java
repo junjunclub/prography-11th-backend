@@ -10,6 +10,10 @@ import java.util.List;
 
 public interface SessionRepository extends JpaRepository<Session, Long> {
     Page<Session> findByCohortId(Long cohortId, Pageable pageable);
+
     List<Session> findByCohortIdAndStatusNot(Long cohortId, SessionStatus status);
+
+    List<Session> findByStatusNot(SessionStatus status);
+
     Page<Session> findByCohortIdAndStatusNot(Long cohortId, SessionStatus status, Pageable pageable);
 }
